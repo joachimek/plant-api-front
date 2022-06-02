@@ -1,6 +1,8 @@
 import { DataProvider, sanitizeFetchType, ValidUntil } from "react-admin"
 import { ResourceName } from "./ResourceName"
 import deviceProvider from './devices/device.provider'
+import plantsProvider from './plants/plant.provider'
+import plantsHistProvider from './plants-hist/plants-hist.provider'
 
 export interface DataProviderResult<RecordType> {
   readonly data: RecordType
@@ -12,6 +14,8 @@ export interface CashableDataProviderResult<RecordType> extends DataProviderResu
 
 const dataProviders: Record<ResourceName, DataProvider> = {
   [ResourceName.DEVICES]: deviceProvider,
+  [ResourceName.PLANTS]: plantsProvider,
+  [ResourceName.PLANTS_HIST]: plantsHistProvider,
 }
 
 export default (

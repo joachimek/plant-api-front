@@ -2,7 +2,7 @@ import { DataProvider, sanitizeFetchType } from 'react-admin'
 import { ResourceName } from '../ResourceName'
 import fakeDevicesProvider from './providers/fake-devices.provider'
 
-const dataProviders: Record<ResourceName, DataProvider> = {
+const dataProviders: Record<string, DataProvider> = {
   [ResourceName.DEVICES]: fakeDevicesProvider,
 }
 

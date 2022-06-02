@@ -1,3 +1,5 @@
 export enum ResourceName {
-  DEVICES = "devices"
+  DEVICES = "devices",
+  PLANTS = "plants",
+  PLANTS_HIST = "plants-hist"
 }
