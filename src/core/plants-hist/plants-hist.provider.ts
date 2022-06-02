@@ -47,12 +47,12 @@ const provider = {
     resource: string,
     { id }: GetByPlantParams,
   ): Promise<DataProviderExtensionResult<PlantsHistDto[]>> => {
-    const activate = await get<PlantsHistDto[]>(
+    const history = await get<PlantsHistDto[]>(
       `${PLANTS_HIST_URL}/GetByPlant/`,
       id.toString(),
     )
     return {
-      data: activate,
+      data: history,
     }
   },
 } as PlantsHistDataProvider
