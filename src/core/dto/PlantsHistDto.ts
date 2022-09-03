@@ -1,4 +1,3 @@
-import { Identifier } from "react-admin"
 import { DateTime } from "../common/date-time"
 
 export interface PlantsHistDto {

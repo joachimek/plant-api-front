@@ -3,6 +3,7 @@ import { ResourceName } from "./ResourceName"
 import deviceProvider from './devices/device.provider'
 import plantsProvider from './plants/plant.provider'
 import plantsHistProvider from './plants-hist/plants-hist.provider'
+import usersProvider from './users/user.provider'
 
 export interface DataProviderResult<RecordType> {
   readonly data: RecordType
@@ -16,6 +17,7 @@ const dataProviders: Record<ResourceName, DataProvider> = {
   [ResourceName.DEVICES]: deviceProvider,
   [ResourceName.PLANTS]: plantsProvider,
   [ResourceName.PLANTS_HIST]: plantsHistProvider,
+  [ResourceName.USERS]: usersProvider,
 }
 
 export default (
