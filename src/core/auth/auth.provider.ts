@@ -2,7 +2,7 @@ import { AuthProvider } from 'react-admin'
 import { LOGIN_URL, USERS_URL } from '../api-urls'
 import { authHeaders, authPost, getBase } from '../common/fetch.utils'
 import { AuthRequest } from './auth.request'
-import { UserDto } from '../dto/UserDto'
+import { UserDto } from '../dto/users/UserDto'
 
 const authProvider: AuthProvider = {
   login: async ({ username, password }) => {

@@ -1,8 +1,10 @@
 import { DataProvider, sanitizeFetchType, ValidUntil } from 'react-admin'
 import { ResourceName } from './ResourceName'
 import deviceProvider from './devices/device.provider'
+import guideProvider from './guides/guides.provider'
 import plantsProvider from './plants/plant.provider'
 import plantsHistProvider from './plants-hist/plants-hist.provider'
+import speciesProvider from './species/species.provider'
 import usersProvider from './users/user.provider'
 
 export interface DataProviderResult<RecordType> {
@@ -16,8 +18,10 @@ export interface CashableDataProviderResult<RecordType>
 
 const dataProviders: Record<ResourceName, DataProvider> = {
   [ResourceName.DEVICES]: deviceProvider,
+  [ResourceName.GUIDES]: guideProvider,
   [ResourceName.PLANTS]: plantsProvider,
   [ResourceName.PLANTS_HIST]: plantsHistProvider,
+  [ResourceName.SPECIES]: plantsHistProvider,
   [ResourceName.USERS]: usersProvider,
 }
 

@@ -1,7 +1,7 @@
 import { DataProvider, GetOneParams, GetOneResult } from 'react-admin'
 import { USERS_URL } from '../api-urls'
 import { get } from '../common/fetch.utils'
-import { UserDto } from '../dto/UserDto'
+import { UserDto } from '../dto/users/UserDto'
 
 const provider = {
   getOne: async (

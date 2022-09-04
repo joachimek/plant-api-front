@@ -6,23 +6,23 @@ import {
   GetOneParams,
   GetOneResult,
 } from 'react-admin'
-import { PLANTS_URL } from '../api-urls'
+import { SPECIES_URL } from '../api-urls'
 import { get, post } from '../common/fetch.utils'
 import { GetListParams } from '../common/get-list.params'
-import { PlantDto } from '../dto/plants/PlantDto'
+import { SpeciesDto } from '../dto/species/SpeciesDto'
 
 const provider = {
   getList: async (
     resource: string,
     { filter, sort, pagination }: GetListParams,
-  ): Promise<GetListResult<PlantDto>> => {
+  ): Promise<GetListResult<SpeciesDto>> => {
     /*
     const filterParams = `o=>${filterParamsComposer('o', filter, filterMapper)}`
     const pathParams = queryParamsComposer(sort, pagination, mapSortEventParam)
     const path = `/${filterParams}?${pathParams ?? pathParams}`
     */
 
-    const data = await get<PlantDto[]>(`${PLANTS_URL}`, '')
+    const data = await get<SpeciesDto[]>(`${SPECIES_URL}`, '')
 
     return Promise.resolve({
       data,
@@ -32,8 +32,8 @@ const provider = {
   getOne: async (
     resource: string,
     { id }: GetOneParams,
-  ): Promise<GetOneResult<PlantDto>> => {
-    const record = await get<PlantDto>(PLANTS_URL, `/${id}`)
+  ): Promise<GetOneResult<SpeciesDto>> => {
+    const record = await get<SpeciesDto>(SPECIES_URL, `/${id}`)
 
     return {
       data: record,
@@ -42,12 +42,9 @@ const provider = {
   create: async (
     resource: string,
     { data }: CreateParams<CreateRecordRequest>,
-  ): Promise<CreateResult<PlantDto>> => {
-    const created = await post<CreateRecordRequest, PlantDto>(PLANTS_URL, {
+  ): Promise<CreateResult<SpeciesDto>> => {
+    const created = await post<CreateRecordRequest, SpeciesDto>(SPECIES_URL, {
       ...data,
-      speciesId: data.speciesId || -1,
-      guideId: data.guideId || -1,
-      deviceId: data.deviceId || -1,
     })
 
     return {
@@ -57,10 +54,9 @@ const provider = {
 } as DataProvider
 
 interface CreateRecordRequest {
-  readonly speciesId?: number
-  readonly guideId?: number
-  readonly deviceId: number
-  readonly name?: string
+  readonly name: string
+  readonly info?: string
+  readonly isPublic: boolean
 }
 
 export default provider

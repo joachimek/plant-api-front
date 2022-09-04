@@ -9,8 +9,7 @@ import { PLANTS_HIST_URL } from '../api-urls'
 import { DataProviderExtensionResult } from '../common/data-provider'
 import { get } from '../common/fetch.utils'
 import { GetListParams } from '../common/get-list.params'
-import { PlantDto } from '../dto/PlantDto'
-import { PlantsHistDto } from '../dto/PlantsHistDto'
+import { PlantsHistDto } from '../dto/plants-hists/PlantsHistDto'
 
 const provider = {
   getList: async (
@@ -33,8 +32,8 @@ const provider = {
   getOne: async (
     resource: string,
     { id }: GetOneParams,
-  ): Promise<GetOneResult<PlantDto>> => {
-    const record = await get<PlantDto>(PLANTS_HIST_URL, `/${id}`)
+  ): Promise<GetOneResult<PlantsHistDto>> => {
+    const record = await get<PlantsHistDto>(PLANTS_HIST_URL, `/${id}`)
 
     return {
       data: record,

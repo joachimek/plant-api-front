@@ -1,7 +1,7 @@
 import { DataProvider } from 'react-admin'
-import { DeviceDto } from '../../dto/devices/DeviceDto'
+import { UserDto } from '../../dto/users/UserDto'
 
-const fakeList: DeviceDto[] = []
+const fakeList: UserDto[] = []
 
 const provider = {
   getOne: (resource, { id }: { id: string }) => {

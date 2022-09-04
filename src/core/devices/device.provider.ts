@@ -9,7 +9,7 @@ import {
 import { DEVICES_URL } from '../api-urls'
 import { get, post } from '../common/fetch.utils'
 import { GetListParams } from '../common/get-list.params'
-import { DeviceDto } from '../dto/DeviceDto'
+import { DeviceDto } from '../dto/devices/DeviceDto'
 
 const provider = {
   getList: async (
@@ -41,12 +41,11 @@ const provider = {
   },
   create: async (
     resource: string,
-    { data }: CreateParams<DeviceDto>,
+    { data }: CreateParams<CreateRecordRequest>,
   ): Promise<CreateResult<DeviceDto>> => {
     const created = await post<CreateRecordRequest, DeviceDto>(DEVICES_URL, {
       ...data,
       plantID: data.plantID || -1,
-      userID: data.userID || -1,
     })
 
     return {
@@ -56,7 +55,6 @@ const provider = {
 } as DataProvider
 
 interface CreateRecordRequest {
-  readonly userID: number
   readonly plantID: number
   readonly name: string
 }
