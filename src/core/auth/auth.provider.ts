@@ -1,9 +1,8 @@
 import { AuthProvider } from 'react-admin'
-import { LOGIN_URL } from '../api-urls'
-import { authPost } from '../common/fetch.utils'
+import { LOGIN_URL, USERS_URL } from '../api-urls'
+import { authHeaders, authPost, getBase } from '../common/fetch.utils'
 import { AuthRequest } from './auth.request'
-import userProvider, { GetOneUserParams } from '../users/user.provider'
-import { ResourceName } from '../ResourceName'
+import { UserDto } from '../dto/UserDto'
 
 const authProvider: AuthProvider = {
   login: async ({ username, password }) => {
@@ -16,6 +15,15 @@ const authProvider: AuthProvider = {
     )
     localStorage.setItem('username', username)
     localStorage.setItem('token', token)
+
+    //role and userId
+    const { role, id } = await getBase<UserDto>(
+      `${USERS_URL}/${username}`,
+      authHeaders(token),
+    )
+
+    localStorage.setItem('role', role)
+    localStorage.setItem('userId', id.toString())
   },
   logout: () => {
     localStorage.removeItem('username')
@@ -36,17 +44,13 @@ const authProvider: AuthProvider = {
     return Promise.reject()
   },
   getPermissions: async (): Promise<string> => {
-    const username = localStorage.getItem('username')
-    const { data: currentUser } = await userProvider.getOne(
-      ResourceName.USERS,
-      { username: username as string } as GetOneUserParams,
-    )
-    const { role } = currentUser
-    return Promise.resolve(role)
+    const role = localStorage.getItem('role')
+    return Promise.resolve(role as string)
   },
   getIdentity: () =>
     Promise.resolve({
-      id: localStorage.getItem('username') as string,
+      id: localStorage.getItem('userId') as string,
+      username: localStorage.getItem('username') as string,
     }),
 }
 

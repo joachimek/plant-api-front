@@ -7,6 +7,7 @@ import { Dashboard } from './main/Dashboard'
 import dataProvider from './core/data.provider'
 import authProvider from './core/auth/auth.provider'
 import { DeviceShow } from './main/devices/DeviceShow'
+import { DeviceCreate } from './main/devices/DeviceCreate'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         name={ResourceName.DEVICES}
         list={DevicesList}
         show={DeviceShow}
+        create={DeviceCreate}
       />
     </Admin>
   )

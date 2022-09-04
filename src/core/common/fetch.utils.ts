@@ -6,12 +6,12 @@ const baseHeaders: HeadersInit = {
   'Content-Type': 'application/json',
 }
 
-const authHeaders = (token = getToken()): HeadersInit => ({
+export const authHeaders = (token = getToken()): HeadersInit => ({
   ...baseHeaders,
   Authorization: `Bearer ${token}`,
 })
 
-const getBase = <T>(url: string, headers: HeadersInit) =>
+export const getBase = <T>(url: string, headers: HeadersInit) =>
   fetchUtils
     .fetchJson(url, {
       method: 'GET',
