@@ -1,11 +1,6 @@
-import {
-  DataProvider,
-  GetOneParams,
-  GetOneResult,
-} from 'react-admin'
+import { DataProvider, GetOneParams, GetOneResult } from 'react-admin'
 import { USERS_URL } from '../api-urls'
 import { get } from '../common/fetch.utils'
-import { DeviceDto } from '../dto/DeviceDto'
 import { UserDto } from '../dto/UserDto'
 
 const provider = {

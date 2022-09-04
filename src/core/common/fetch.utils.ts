@@ -8,6 +8,7 @@ const baseHeaders: HeadersInit = {
 
 const authHeaders = (token = getToken()): HeadersInit => ({
   ...baseHeaders,
+  Authorization: `Bearer ${token}`,
 })
 
 const getBase = <T>(url: string, headers: HeadersInit) =>

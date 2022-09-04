@@ -7,10 +7,13 @@ import { ResourceName } from '../ResourceName'
 
 const authProvider: AuthProvider = {
   login: async ({ username, password }) => {
-    const token = await authPost<AuthRequest, string>(LOGIN_URL, {
-      login: username,
-      password,
-    })
+    const { token } = await authPost<AuthRequest, { token: string }>(
+      LOGIN_URL,
+      {
+        username,
+        password,
+      },
+    )
     localStorage.setItem('username', username)
     localStorage.setItem('token', token)
   },
@@ -29,13 +32,15 @@ const authProvider: AuthProvider = {
   },
   checkAuth: async () => {
     const token = localStorage.getItem('token')
-    if (token)
-      return Promise.resolve()
+    if (token) return Promise.resolve()
     return Promise.reject()
   },
   getPermissions: async (): Promise<string> => {
     const username = localStorage.getItem('username')
-    const { data: currentUser } = await userProvider.getOne(ResourceName.USERS, { username: username as string } as GetOneUserParams)
+    const { data: currentUser } = await userProvider.getOne(
+      ResourceName.USERS,
+      { username: username as string } as GetOneUserParams,
+    )
     const { role } = currentUser
     return Promise.resolve(role)
   },

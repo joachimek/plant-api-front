@@ -10,9 +10,8 @@
     "@types/node": "^16.11.33",
     "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.3",
-    "eslint": "^8.16.0",
+    "eslint": "^8.23.0",
     "i18next": "^21.8.7",
-    "prettier": "^2.7.1",
     "react": "^18.1.0",
     "react-admin": "^4.0.2",
     "react-dom": "^18.1.0",
@@ -24,7 +23,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format fix": "npx prettier --write .",
+    "lint fix": "eslint **/*.ts && **/*.tsx"
   },
   "eslintConfig": {
     "extends": [
@@ -43,5 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "prettier": "2.7.1"
   }
 }

@@ -1,4 +1,4 @@
-import { DateTime } from "../common/date-time"
+import { DateTime } from '../common/date-time'
 
 export interface PlantsHistDto {
   readonly id: number

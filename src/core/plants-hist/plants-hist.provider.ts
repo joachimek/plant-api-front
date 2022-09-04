@@ -5,7 +5,7 @@ import {
   GetOneResult,
   Identifier,
 } from 'react-admin'
-import { PLANTS_HIST_URL, PLANTS_URL } from '../api-urls'
+import { PLANTS_HIST_URL } from '../api-urls'
 import { DataProviderExtensionResult } from '../common/data-provider'
 import { get } from '../common/fetch.utils'
 import { GetListParams } from '../common/get-list.params'
@@ -23,10 +23,7 @@ const provider = {
     const path = `/${filterParams}?${pathParams ?? pathParams}`
     */
 
-    const data = await get<PlantsHistDto[]>(
-      `${PLANTS_HIST_URL}`,
-      '',
-    )
+    const data = await get<PlantsHistDto[]>(`${PLANTS_HIST_URL}`, '')
 
     return Promise.resolve({
       data,

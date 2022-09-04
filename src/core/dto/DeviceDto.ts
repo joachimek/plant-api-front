@@ -1,4 +1,3 @@
-
 export interface DeviceDto {
   readonly id: number
   readonly userID: number

@@ -1,4 +1,8 @@
-import { GetListParams as GLP, GetManyReferenceParams as GMRP, SortPayload as SP } from 'react-admin'
+import {
+  GetListParams as GLP,
+  GetManyReferenceParams as GMRP,
+  SortPayload as SP,
+} from 'react-admin'
 
 export interface SortPayload extends SP {
   readonly field: string

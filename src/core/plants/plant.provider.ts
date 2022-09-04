@@ -22,10 +22,7 @@ const provider = {
     const path = `/${filterParams}?${pathParams ?? pathParams}`
     */
 
-    const data = await get<PlantDto[]>(
-      `${PLANTS_URL}`,
-      '',
-    )
+    const data = await get<PlantDto[]>(`${PLANTS_URL}`, '')
 
     return Promise.resolve({
       data,

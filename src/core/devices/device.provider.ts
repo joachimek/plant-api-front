@@ -22,10 +22,7 @@ const provider = {
     const path = `/${filterParams}?${pathParams ?? pathParams}`
     */
 
-    const data = await get<DeviceDto[]>(
-      `${DEVICES_URL}`,
-      '',
-    )
+    const data = await get<DeviceDto[]>(`${DEVICES_URL}`, '')
 
     return Promise.resolve({
       data,

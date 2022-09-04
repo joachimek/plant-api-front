@@ -1,6 +1,5 @@
 import { DataProvider } from 'react-admin'
-import { DeviceDto} from '../../dto/DeviceDto'
-
+import { DeviceDto } from '../../dto/DeviceDto'
 
 const fakeList: DeviceDto[] = []
 
