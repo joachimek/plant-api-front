@@ -21,7 +21,7 @@ const dataProviders: Record<ResourceName, DataProvider> = {
   [ResourceName.GUIDES]: guideProvider,
   [ResourceName.PLANTS]: plantsProvider,
   [ResourceName.PLANTS_HIST]: plantsHistProvider,
-  [ResourceName.SPECIES]: plantsHistProvider,
+  [ResourceName.SPECIES]: speciesProvider,
   [ResourceName.USERS]: usersProvider,
 }
 
