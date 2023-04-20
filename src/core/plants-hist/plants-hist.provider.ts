@@ -1,6 +1,8 @@
 import {
   DataProvider,
   GetListResult,
+  GetManyParams,
+  GetManyResult,
   GetOneParams,
   GetOneResult,
   Identifier,
@@ -50,6 +52,17 @@ const provider = {
     return {
       data: history,
     }
+  },
+  getMany: async (
+    resource: string,
+    { ids }: GetManyParams,
+  ): Promise<GetManyResult<PlantsHistDto>> => {
+    const data = await get<PlantsHistDto[]>(
+      PLANTS_HIST_URL,
+      `/GetMany/${ids.join(',')}`,
+    )
+
+    return Promise.resolve({ data })
   },
 } as PlantsHistDataProvider
 

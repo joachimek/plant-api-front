@@ -3,6 +3,8 @@ import {
   CreateResult,
   DataProvider,
   GetListResult,
+  GetManyParams,
+  GetManyResult,
   GetOneParams,
   GetOneResult,
 } from 'react-admin'
@@ -51,6 +53,17 @@ const provider = {
     return {
       data: created,
     }
+  },
+  getMany: async (
+    resource: string,
+    { ids }: GetManyParams,
+  ): Promise<GetManyResult<DeviceDto>> => {
+    const data = await get<DeviceDto[]>(
+      DEVICES_URL,
+      `/GetMany/${ids.join(',')}`,
+    )
+
+    return Promise.resolve({ data })
   },
 } as DataProvider
 

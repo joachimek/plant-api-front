@@ -7,20 +7,21 @@ import {
   TextInput,
 } from 'react-admin'
 import { ResourceName } from '../../core/ResourceName'
+import { useSearchParams } from 'react-router-dom'
 
 export const PlantCreate = ({ ...props }) => {
-  const urlSearchParams = new URLSearchParams(window.location.search)
-  const params = Object.fromEntries(urlSearchParams.entries())
-  console.log(window.location)
+  const [paramsEntries] = useSearchParams()
+  const { device } = Object.fromEntries(paramsEntries)
 
   return (
     <Create {...props}>
-      <SimpleForm>
+      <SimpleForm
+        defaultValues={{
+          deviceId: device,
+        }}
+      >
         <TextInput source="name" />
         <ReferenceInput source="speciesId" reference={ResourceName.SPECIES}>
-          <AutocompleteInput />
-        </ReferenceInput>
-        <ReferenceInput source="guideId" reference={ResourceName.GUIDES}>
           <AutocompleteInput />
         </ReferenceInput>
         <ReferenceInput source="deviceId" reference={ResourceName.DEVICES}>

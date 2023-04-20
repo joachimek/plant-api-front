@@ -1,4 +1,10 @@
-import { DataProvider, GetOneParams, GetOneResult } from 'react-admin'
+import {
+  DataProvider,
+  GetManyParams,
+  GetManyResult,
+  GetOneParams,
+  GetOneResult,
+} from 'react-admin'
 import { USERS_URL } from '../api-urls'
 import { get } from '../common/fetch.utils'
 import { UserDto } from '../dto/users/UserDto'
@@ -13,6 +19,14 @@ const provider = {
     return {
       data: record,
     }
+  },
+  getMany: async (
+    resource: string,
+    { ids }: GetManyParams,
+  ): Promise<GetManyResult<UserDto>> => {
+    const data = await get<UserDto[]>(USERS_URL, `/GetMany/${ids.join(',')}`)
+
+    return Promise.resolve({ data })
   },
 } as DataProvider
 

@@ -58,16 +58,12 @@ const provider = {
     resource: string,
     { ids }: GetManyParams,
   ): Promise<GetManyResult<SpeciesDto>> => {
-    console.log(ids)
-
-    const species = await post<{ ids: Identifier[] }, SpeciesDto[]>(
-      `${SPECIES_URL}/GetMany`,
-      {
-        ids,
-      },
+    const data = await get<SpeciesDto[]>(
+      SPECIES_URL,
+      `/GetMany/${ids.join(',')}`,
     )
 
-    return Promise.resolve({ data: species })
+    return Promise.resolve({ data })
   },
 } as DataProvider
 
