@@ -1,11 +1,11 @@
-import React from "react"
-import { Datagrid, FunctionField, List, TextField } from "react-admin"
+import React from 'react'
+import { Datagrid, List, TextField } from 'react-admin'
 
-export const PlantsList = () => (
+export const SpeciesList = () => (
   <List>
     <Datagrid>
       <TextField source="id" />
       <TextField source="name" />
     </Datagrid>
   </List>
-) 
+)

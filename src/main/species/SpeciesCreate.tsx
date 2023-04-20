@@ -1,10 +1,12 @@
-import React from "react"
-import { Create, SimpleForm } from "react-admin"
+import React from 'react'
+import { BooleanInput, Create, SimpleForm, TextInput } from 'react-admin'
 
-export const SpeciesCreate = () => (
-  <Create>
+export const SpeciesCreate = ({ ...props }) => (
+  <Create {...props}>
     <SimpleForm>
-      
+      <TextInput source="name" />
+      <TextInput source="info" fullWidth multiline />
+      <BooleanInput source="isPublic" />
     </SimpleForm>
   </Create>
 )

@@ -3,8 +3,11 @@ import {
   CreateResult,
   DataProvider,
   GetListResult,
+  GetManyParams,
+  GetManyResult,
   GetOneParams,
   GetOneResult,
+  Identifier,
 } from 'react-admin'
 import { SPECIES_URL } from '../api-urls'
 import { get, post } from '../common/fetch.utils'
@@ -50,6 +53,21 @@ const provider = {
     return {
       data: created,
     }
+  },
+  getMany: async (
+    resource: string,
+    { ids }: GetManyParams,
+  ): Promise<GetManyResult<SpeciesDto>> => {
+    console.log(ids)
+
+    const species = await post<{ ids: Identifier[] }, SpeciesDto[]>(
+      `${SPECIES_URL}/GetMany`,
+      {
+        ids,
+      },
+    )
+
+    return Promise.resolve({ data: species })
   },
 } as DataProvider
 

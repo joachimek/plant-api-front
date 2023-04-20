@@ -1,5 +1,5 @@
-import React from "react"
-import { Show, SimpleShowLayout, TextField } from "react-admin"
+import React from 'react'
+import { Show, SimpleShowLayout, TextField } from 'react-admin'
 
 export const UserShow = () => (
   <Show>

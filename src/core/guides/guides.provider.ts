@@ -58,7 +58,7 @@ interface CreateRecordRequest {
   readonly speciesID?: number
   readonly info?: string
   readonly maxHumidity: number
-  readonly minHumidity:	number
+  readonly minHumidity: number
 }
 
 export default provider

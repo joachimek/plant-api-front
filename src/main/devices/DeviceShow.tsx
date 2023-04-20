@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import {
-  Datagrid,
+  CreateButton,
+  ReferenceField,
   Show,
   ShowProps,
   SimpleShowLayout,
@@ -10,7 +11,6 @@ import {
   useShowContext,
 } from 'react-admin'
 import { ResourceName } from '../../core/ResourceName'
-import plantHistProvider from '../../core/plants-hist/plants-hist.provider'
 
 const DevicePlantTab = () => {
   const { isFetching, isLoading, record } = useShowContext()
@@ -25,40 +25,21 @@ const DevicePlantTab = () => {
         <SimpleShowLayout>
           <TextField source="id" />
           <TextField source="name" />
+          <ReferenceField source="speciesId" reference={ResourceName.SPECIES}>
+            <TextField source="name" />
+          </ReferenceField>
         </SimpleShowLayout>
       </Show>
     </>
   ) : (
-    <h4>no plant to show</h4>
+    <div>
+      <h4>no plant to show</h4>
+      <CreateButton
+        resource={ResourceName.PLANTS}
+        to={`/plants/create?device=${record?.id}`}
+      />
+    </div>
   )
-}
-
-//TODO: related actions
-const DeviceHistoryTab = () => {
-  const { record } = useShowContext()
-  const [history, setHistory] = useState<any[]>([])
-
-  const getHistoryCallback = useCallback(async () => {
-    const fetchHistory = await plantHistProvider.getByPlant(
-      ResourceName.PLANTS_HIST,
-      { id: record?.plandID },
-    )
-    console.log(fetchHistory)
-  }, [record])
-
-  useEffect(() => {
-    if (record?.plandID) getHistoryCallback()
-  }, [getHistoryCallback])
-
-  /*
-  return(
-    <Datagrid resource={ResourceName.PLANTS_HIST} data={history as any[]}>
-      <TextField source="id" />
-    </Datagrid>
-  )
-  */
-
-  return <div />
 }
 
 const DeviceShowLayout = ({ ...props }) => {
@@ -70,7 +51,7 @@ const DeviceShowLayout = ({ ...props }) => {
         <TextField source="id" />
         <TextField source="name" />
       </Tab>
-      {!isFetching && !isLoading && record?.plantID && record?.plantID !== -1 && (
+      {!isFetching && !isLoading && record?.plantID && (
         <Tab label="plant">
           <DevicePlantTab />
         </Tab>
