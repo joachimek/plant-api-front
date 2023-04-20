@@ -7,7 +7,6 @@ import {
   GetManyResult,
   GetOneParams,
   GetOneResult,
-  Identifier,
 } from 'react-admin'
 import { SPECIES_URL } from '../api-urls'
 import { get, post } from '../common/fetch.utils'
