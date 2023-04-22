@@ -1,24 +1,35 @@
 import React from 'react'
 import {
   AutocompleteInput,
-  CreateProps,
   ReferenceInput,
+  SaveButton,
   SimpleForm,
   TextInput,
+  Toolbar,
 } from 'react-admin'
 import { ResourceName } from '../../core/ResourceName'
-import { CreateDialog } from '../common/FormDialog'
+import { CreateDialog, CreateDialogProps } from '../common/FormDialog'
 
-export const DeviceCreateDialog = (props: CreateProps) => {
+const DeviceCreateDialogToolbar = ({ ...props }) => {
+  const { handleClose, ...rest } = props
+
+  return (
+    <Toolbar {...rest}>
+      <SaveButton onClick={handleClose} />
+    </Toolbar>
+  )
+}
+
+export const DeviceCreateDialog = ({ ...props }) => {
+  const { handleClose } = props
+
   const userId = localStorage.getItem('userId')
 
   return (
     <CreateDialog
-      {...props}
-      open={false}
-      handleClose={() => console.log('test')}
+      {...props as CreateDialogProps}
     >
-      <SimpleForm defaultValues={{ userId }}>
+      <SimpleForm defaultValues={{ userId }} toolbar={<DeviceCreateDialogToolbar handleClose={handleClose} />}>
         <ReferenceInput
           source="userId"
           reference={ResourceName.USERS}
