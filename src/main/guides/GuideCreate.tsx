@@ -1,13 +1,27 @@
 import React from 'react'
-import { Create, NumberInput, SimpleForm, TextInput } from 'react-admin'
+import {
+  AutocompleteInput,
+  Create,
+  ReferenceInput,
+  SimpleForm,
+  TextInput,
+} from 'react-admin'
+import { SliderInput } from '../common/SliderInput'
+import { ResourceName } from '../../core/ResourceName'
 
 export const GuideCreate = ({ ...props }) => (
   <Create {...props}>
     <SimpleForm>
-      <TextInput source="speciesId" />
-      <TextInput source="info" />
-      <NumberInput source="maxHumidity" />
-      <NumberInput source="minHumidity" />
+      <ReferenceInput
+        reference={ResourceName.SPECIES}
+        source="speciesId"
+        fullWidth
+      >
+        <AutocompleteInput fullWidth />
+      </ReferenceInput>
+      <TextInput source="info" fullWidth />
+      <SliderInput source="maxHumidity" fullWidth />
+      <SliderInput source="minHumidity" fullWidth />
     </SimpleForm>
   </Create>
 )

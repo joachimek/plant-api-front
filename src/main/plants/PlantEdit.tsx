@@ -13,15 +13,15 @@ export const PlantEdit = ({ ...props }) => (
   <Edit {...props}>
     <SimpleForm>
       <TextField source="id" />
-      <TextInput source="name" />
-      <ReferenceInput source="speciesId" reference={ResourceName.SPECIES}>
-        <AutocompleteInput />
+      <TextInput source="name" fullWidth />
+      <ReferenceInput source="speciesId" reference={ResourceName.SPECIES} fullWidth>
+        <AutocompleteInput fullWidth />
       </ReferenceInput>
-      <ReferenceInput source="guideId" reference={ResourceName.GUIDES}>
-        <AutocompleteInput />
+      <ReferenceInput source="guideId" reference={ResourceName.GUIDES} fullWidth>
+        <AutocompleteInput fullWidth />
       </ReferenceInput>
-      <ReferenceInput source="deviceId" reference={ResourceName.DEVICES}>
-        <AutocompleteInput />
+      <ReferenceInput source="deviceId" reference={ResourceName.DEVICES} fullWidth>
+        <AutocompleteInput fullWidth />
       </ReferenceInput>
     </SimpleForm>
   </Edit>

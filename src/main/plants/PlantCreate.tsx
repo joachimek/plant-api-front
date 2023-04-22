@@ -20,12 +20,12 @@ export const PlantCreate = ({ ...props }) => {
           deviceId: device,
         }}
       >
-        <TextInput source="name" />
-        <ReferenceInput source="speciesId" reference={ResourceName.SPECIES}>
-          <AutocompleteInput />
+        <TextInput source="name" fullWidth />
+        <ReferenceInput source="speciesId" reference={ResourceName.SPECIES} fullWidth>
+          <AutocompleteInput fullWidth />
         </ReferenceInput>
-        <ReferenceInput source="deviceId" reference={ResourceName.DEVICES}>
-          <AutocompleteInput />
+        <ReferenceInput source="deviceId" reference={ResourceName.DEVICES} fullWidth>
+          <AutocompleteInput fullWidth />
         </ReferenceInput>
       </SimpleForm>
     </Create>

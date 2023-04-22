@@ -10,11 +10,11 @@ import {
 export const GuideEdit = ({ ...props }) => (
   <Create {...props}>
     <SimpleForm>
-      <TextField source="id" />
-      <TextInput source="speciesId" />
-      <TextInput source="info" />
-      <NumberInput source="maxHumidity" />
-      <NumberInput source="minHumidity" />
+      <TextField source="id" fullWidth />
+      <TextInput source="speciesId" fullWidth />
+      <TextInput source="info" fullWidth />
+      <NumberInput source="maxHumidity" fullWidth />
+      <NumberInput source="minHumidity" fullWidth />
     </SimpleForm>
   </Create>
 )

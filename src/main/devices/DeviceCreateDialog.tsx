@@ -1,19 +1,19 @@
 import React from 'react'
 import {
   AutocompleteInput,
-  Create,
   CreateProps,
   ReferenceInput,
   SimpleForm,
   TextInput,
 } from 'react-admin'
 import { ResourceName } from '../../core/ResourceName'
+import { CreateDialog } from '../common/FormDialog'
 
-export const DeviceCreate = (props: CreateProps) => {
+export const DeviceCreateDialog = (props: CreateProps) => {
   const userId = localStorage.getItem('userId')
 
   return (
-    <Create {...props}>
+    <CreateDialog {...props} open={false} handleClose={() => console.log("test")}>
       <SimpleForm defaultValues={{ userId }}>
         <ReferenceInput
           source="userId"
@@ -24,6 +24,6 @@ export const DeviceCreate = (props: CreateProps) => {
         </ReferenceInput>
         <TextInput source="name" fullWidth />
       </SimpleForm>
-    </Create>
+    </CreateDialog>
   )
 }

@@ -18,11 +18,17 @@ const provider = {
     resource: string,
     { filter, sort, pagination }: GetListParams,
   ): Promise<GetListResult<SpeciesDto>> => {
-    /*
-    const filterParams = `o=>${filterParamsComposer('o', filter, filterMapper)}`
-    const pathParams = queryParamsComposer(sort, pagination, mapSortEventParam)
-    const path = `/${filterParams}?${pathParams ?? pathParams}`
-    */
+    if (filter?.q) {
+      const data = await get<SpeciesDto[]>(
+        `${SPECIES_URL}/GetByName/`,
+        filter?.q,
+      )
+
+      return Promise.resolve({
+        data,
+        total: data.length,
+      })
+    }
 
     const data = await get<SpeciesDto[]>(`${SPECIES_URL}`, '')
 

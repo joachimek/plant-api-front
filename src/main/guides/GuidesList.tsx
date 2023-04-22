@@ -1,8 +1,8 @@
 import React from 'react'
 import { Datagrid, List, TextField } from 'react-admin'
 
-export const GuidesList = () => (
-  <List>
+export const GuidesList = ({ ...props }) => (
+  <List {...props}>
     <Datagrid>
       <TextField source="id" />
       <TextField source="speciesId" />

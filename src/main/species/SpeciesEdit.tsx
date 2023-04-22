@@ -11,9 +11,9 @@ export const SpeciesEdit = ({ ...props }) => (
   <Edit {...props}>
     <SimpleForm>
       <TextField source="id" />
-      <TextInput source="name" />
+      <TextInput source="name" fullWidth />
       <TextInput source="info" fullWidth multiline />
-      <BooleanInput source="isPublic" />
+      <BooleanInput source="isPublic" fullWidth />
     </SimpleForm>
   </Edit>
 )

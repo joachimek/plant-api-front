@@ -33,6 +33,7 @@ function App() {
         show={DeviceShow}
         create={DeviceCreate}
         icon={Yard}
+        recordRepresentation="name"
       />
       <Resource
         name={ResourceName.PLANTS}
@@ -46,6 +47,7 @@ function App() {
         create={SpeciesCreate}
         edit={SpeciesEdit}
         icon={Forest}
+        recordRepresentation="name"
       />
       <Resource
         name={ResourceName.GUIDES}
@@ -55,7 +57,11 @@ function App() {
         icon={DynamicForm}
       />
       <Resource name={ResourceName.PLANTS_HIST} />
-      <Resource name={ResourceName.USERS} show={UserShow} />
+      <Resource
+        name={ResourceName.USERS}
+        show={UserShow}
+        recordRepresentation="username"
+      />
     </Admin>
   )
 }

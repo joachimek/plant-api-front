@@ -1,5 +1,7 @@
 import {
   DataProvider,
+  GetListParams,
+  GetListResult,
   GetManyParams,
   GetManyResult,
   GetOneParams,
@@ -10,6 +12,15 @@ import { get } from '../common/fetch.utils'
 import { UserDto } from '../dto/users/UserDto'
 
 const provider = {
+  getList: async (
+    resource: string,
+    props: GetListParams,
+  ): Promise<GetListResult<UserDto>> => {
+    return Promise.resolve({
+      data: [],
+      total: 0,
+    })
+  },
   getOne: async (
     resource: string,
     { username }: GetOneUserParams,
