@@ -1,12 +1,12 @@
-import { Dialog, DialogProps } from "@mui/material";
-import React, { Children, ReactElement, cloneElement } from "react";
-import { CreateBase, CreateProps, EditBase, EditProps } from "react-admin";
+import { Dialog, DialogProps } from '@mui/material'
+import React, { Children, ReactElement, cloneElement } from 'react'
+import { CreateBase, CreateProps, EditBase, EditProps } from 'react-admin'
 
 export interface CreateDialogProps
   extends Omit<CreateProps, 'classes'>,
-  Omit<DialogProps, 'id' | 'title' | 'sx'> {
-  children?: ReactElement;
-  handleClose: () => void;
+    Omit<DialogProps, 'id' | 'title' | 'sx'> {
+  children?: ReactElement
+  handleClose: () => void
 }
 
 export const CreateDialog = ({
@@ -29,9 +29,9 @@ export const CreateDialog = ({
 
 export interface EditDialogProps
   extends Omit<EditProps, 'classes'>,
-  Omit<DialogProps, 'id' | 'title' | 'sx'> {
-  children?: ReactElement;
-  handleClose: () => void;
+    Omit<DialogProps, 'id' | 'title' | 'sx'> {
+  children?: ReactElement
+  handleClose: () => void
 }
 
 export const EditDialog = ({
@@ -46,8 +46,6 @@ export const EditDialog = ({
     aria-labelledby="create-dialog-title"
     onClose={handleClose}
   >
-    <EditBase>
-      {cloneElement(Children.only(children as any), props)}
-    </EditBase>
+    <EditBase>{cloneElement(Children.only(children as any), props)}</EditBase>
   </Dialog>
 )
