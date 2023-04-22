@@ -9,6 +9,8 @@ import {
   TextField,
   TopToolbar,
   sanitizeListRestProps,
+  useListContext,
+  useRedirect,
   useRefresh,
 } from 'react-admin'
 import { DeviceCreateDialog } from './DeviceCreateDialog'
@@ -24,32 +26,41 @@ const DeviceListAction = ({ ...props }) => {
   )
 }
 
-export const DevicesList = (props: ListProps) => {
-  const [createOpen, setCreateOpen] = useState<boolean>(false)
+const DevicesListBase = ({ ...props }) => {
+  const { createOpen, setCreateOpen, ...rest } = props
   const refresh = useRefresh()
+  const { refetch } = useListContext()
+  const redirect = useRedirect()
 
   const handleCloseCreate = () => {
     setCreateOpen(false)
-    //todo: fix refresh
-    refresh()
+    redirect("/devices")
   }
+
+  return (
+    <>
+      <Datagrid {...rest} rowClick="show">
+        <TextField source="id" />
+        <TextField source="name" />
+        <ReferenceField source="plantId" reference={ResourceName.PLANTS}>
+          <TextField source="id" />
+        </ReferenceField>
+      </Datagrid>
+      <DeviceCreateDialog {...props} open={createOpen} handleClose={handleCloseCreate} redirect="/devices" />
+    </>
+  )
+}
+
+export const DevicesList = (props: ListProps) => {
+  const [createOpen, setCreateOpen] = useState<boolean>(false)
 
   const handleOpenCreate = () => {
     setCreateOpen(true)
   }
 
   return (
-    <>
-      <DeviceCreateDialog {...props} open={createOpen} handleClose={handleCloseCreate} redirect="/devices" />
-      <List {...props} bulkActionButtons={false} actions={<DeviceListAction handleOpenCreate={handleOpenCreate} />}>
-        <Datagrid rowClick="show">
-          <TextField source="id" />
-          <TextField source="name" />
-          <ReferenceField source="plantId" reference={ResourceName.PLANTS}>
-            <TextField source="id" />
-          </ReferenceField>
-        </Datagrid>
-      </List>
-    </>
+    <List {...props} bulkActionButtons={false} actions={<DeviceListAction handleOpenCreate={handleOpenCreate} />}>
+      <DevicesListBase createOpen={createOpen} setCreateOpen={setCreateOpen} />
+    </List>
   )
 }
