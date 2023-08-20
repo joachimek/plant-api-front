@@ -7,11 +7,13 @@ import {
   GetManyResult,
   GetOneParams,
   GetOneResult,
+  Identifier,
 } from 'react-admin'
 import { GUIDES_URL } from '../api-urls'
 import { get, post } from '../common/fetch.utils'
 import { GetListParams } from '../common/get-list.params'
 import { GuideDto } from '../dto/guides/GuideDto'
+import { DataProviderExtensionResult } from '../common/data-provider'
 
 const provider = {
   getList: async (
@@ -41,6 +43,18 @@ const provider = {
       data: record,
     }
   },
+  getByPlantId: async (
+    resource: string,
+    { id }: GetByPlantIdParams,
+  ): Promise<DataProviderExtensionResult<GuideDto[]>> => {
+    const guide = await get<GuideDto[]>(
+      `${GUIDES_URL}/GetByPlantId/`,
+      id.toString(),
+    )
+    return {
+      data: guide,
+    }
+  },
   create: async (
     resource: string,
     { data }: CreateParams<CreateRecordRequest>,
@@ -54,6 +68,7 @@ const provider = {
       data: created,
     }
   },
+  
   getMany: async (
     resource: string,
     { ids }: GetManyParams,
@@ -62,13 +77,24 @@ const provider = {
 
     return Promise.resolve({ data })
   },
-} as DataProvider
+} as GuidesDataProvider
+
+interface GuidesDataProvider extends DataProvider {
+  getByPlantId: (
+    resource: string,
+    params: GetByPlantIdParams,
+  ) => Promise<DataProviderExtensionResult<GuideDto[]>>,
+}
 
 interface CreateRecordRequest {
   readonly speciesID?: number
   readonly info?: string
   readonly maxHumidity: number
   readonly minHumidity: number
+}
+
+export interface GetByPlantIdParams {
+  id: Identifier
 }
 
 export default provider

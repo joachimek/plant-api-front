@@ -1,6 +1,8 @@
 import React from 'react'
 import {
   CreateButton,
+  FunctionField,
+  GET_ONE,
   ReferenceField,
   Show,
   ShowProps,
@@ -15,6 +17,10 @@ import { useQuery } from 'react-query'
 import { ResourceName } from '../../core/ResourceName'
 import { DeviceDto } from '../../core/dto/devices/DeviceDto'
 import { Link } from 'react-router-dom'
+import { PlantsHistDto } from '../../core/dto/plants-hists/PlantsHistDto'
+import { AirHumidityField } from './device-show/AirHumidityField'
+import { SoilHumidityField } from './device-show/SoilHumidityField'
+import { TemperatureField } from './device-show/TemperatureField'
 
 const DeviceGeneralTab = ({ ...props }) => {
   const { label } = props
@@ -25,18 +31,24 @@ const DeviceGeneralTab = ({ ...props }) => {
     queryFn: () => provider?.getLastByPlantId(ResourceName.PLANTS_HIST, { id: device?.plantID }),
     enabled: device?.plantID !== -1,
   })
-
-  console.log(action)
+  const { data: guide } = useQuery({
+    queryKey: [ResourceName.GUIDES, 'getByPlantId', { id: device?.plantID }],
+    queryFn: () => provider?.getByPlantId(ResourceName.GUIDES, { id: device?.plantID }),
+    enabled: device?.plantID !== -1,
+  })
 
   return (
     <Tab {...props} label={label}>
       <TextField source="id" />
       <TextField source="name" />
+      {action && <AirHumidityField action={action} guide={guide} />}
+      {action && <SoilHumidityField action={action} guide={guide} />}
+      {action && <TemperatureField action={action} guide={guide} />}
     </Tab>
   )
 }
 
-const DeviceStatusTab = ({...props}) => {
+const DeviceStatusTab = ({ ...props }) => {
   const { label, path } = props
 
   const { record: device } = useShowContext<DeviceDto>()
@@ -47,7 +59,7 @@ const DeviceStatusTab = ({...props}) => {
     enabled: device?.plantID !== -1,
   })
 
-  return(
+  return (
     <Tab {...props} label={label} path={path}>
 
     </Tab>
@@ -91,8 +103,10 @@ const DeviceShowLayout = ({ ...props }) => {
   return (
     <TabbedShowLayout {...props}>
       <DeviceGeneralTab label="details" />
-      <DeviceStatusTab label="statuses" />
-      {!isFetching && !isLoading && record?.plantID && (
+      {isFetching && isLoading && record?.plantID !== -1 && (
+        <DeviceStatusTab label="statuses" />
+      )}
+      {!isFetching && !isLoading && (
         <DevicePlantTab label="plant" path="plant" />
       )}
     </TabbedShowLayout>
