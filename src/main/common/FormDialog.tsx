@@ -46,6 +46,8 @@ export const EditDialog = ({
     aria-labelledby="create-dialog-title"
     onClose={handleClose}
   >
-    <EditBase {...props}>{cloneElement(Children.only(children as any), props)}</EditBase>
+    <EditBase {...props}>
+      {cloneElement(Children.only(children as any), props)}
+    </EditBase>
   </Dialog>
 )

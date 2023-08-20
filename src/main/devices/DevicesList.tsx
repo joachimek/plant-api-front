@@ -34,7 +34,7 @@ const DevicesListBase = ({ ...props }) => {
 
   const handleCloseCreate = () => {
     setCreateOpen(false)
-    redirect("/devices")
+    redirect('/devices')
   }
 
   return (
@@ -46,7 +46,12 @@ const DevicesListBase = ({ ...props }) => {
           <TextField source="id" />
         </ReferenceField>
       </Datagrid>
-      <DeviceCreateDialog {...props} open={createOpen} handleClose={handleCloseCreate} redirect="/devices" />
+      <DeviceCreateDialog
+        {...props}
+        open={createOpen}
+        handleClose={handleCloseCreate}
+        redirect="/devices"
+      />
     </>
   )
 }
@@ -59,7 +64,11 @@ export const DevicesList = (props: ListProps) => {
   }
 
   return (
-    <List {...props} bulkActionButtons={false} actions={<DeviceListAction handleOpenCreate={handleOpenCreate} />}>
+    <List
+      {...props}
+      bulkActionButtons={false}
+      actions={<DeviceListAction handleOpenCreate={handleOpenCreate} />}
+    >
       <DevicesListBase createOpen={createOpen} setCreateOpen={setCreateOpen} />
     </List>
   )

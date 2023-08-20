@@ -41,12 +41,24 @@ const provider = {
       data: record,
     }
   },
-  getByPlant: async (
+  getByPlantId: async (
     resource: string,
     { id }: GetByPlantParams,
   ): Promise<DataProviderExtensionResult<PlantsHistDto[]>> => {
     const history = await get<PlantsHistDto[]>(
-      `${PLANTS_HIST_URL}/GetByPlant/`,
+      `${PLANTS_HIST_URL}/GetByPlantId/`,
+      id.toString(),
+    )
+    return {
+      data: history,
+    }
+  },
+  getLastByPlantId: async (
+    resource: string,
+    { id }: GetByPlantParams,
+  ): Promise<DataProviderExtensionResult<PlantsHistDto>> => {
+    const history = await get<PlantsHistDto>(
+      `${PLANTS_HIST_URL}/GetLastByPlantId/`,
       id.toString(),
     )
     return {
@@ -67,10 +79,14 @@ const provider = {
 } as PlantsHistDataProvider
 
 interface PlantsHistDataProvider extends DataProvider {
-  getByPlant: (
+  getByPlantId: (
     resource: string,
     params: GetByPlantParams,
-  ) => Promise<DataProviderExtensionResult<PlantsHistDto[]>>
+  ) => Promise<DataProviderExtensionResult<PlantsHistDto[]>>,
+  getLastByPlantId: (
+    resource: string,
+    params: GetByPlantParams,
+  ) => Promise<DataProviderExtensionResult<PlantsHistDto>>
 }
 
 export interface GetByPlantParams {

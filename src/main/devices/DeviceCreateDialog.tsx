@@ -26,10 +26,11 @@ export const DeviceCreateDialog = ({ ...props }) => {
   const userId = localStorage.getItem('userId')
 
   return (
-    <CreateDialog
-      {...props as CreateDialogProps}
-    >
-      <SimpleForm defaultValues={{ userId }} toolbar={<DeviceCreateDialogToolbar handleClose={handleClose} />}>
+    <CreateDialog {...(props as CreateDialogProps)}>
+      <SimpleForm
+        defaultValues={{ userId }}
+        toolbar={<DeviceCreateDialogToolbar handleClose={handleClose} />}
+      >
         <ReferenceInput
           source="userId"
           reference={ResourceName.USERS}

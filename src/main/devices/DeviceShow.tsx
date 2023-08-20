@@ -8,37 +8,80 @@ import {
   Tab,
   TabbedShowLayout,
   TextField,
+  useDataProvider,
   useShowContext,
 } from 'react-admin'
+import { useQuery } from 'react-query'
 import { ResourceName } from '../../core/ResourceName'
+import { DeviceDto } from '../../core/dto/devices/DeviceDto'
+import { Link } from 'react-router-dom'
 
-const DevicePlantTab = () => {
+const DeviceGeneralTab = ({ ...props }) => {
+  const { label } = props
+  const { record: device } = useShowContext<DeviceDto>()
+  const provider = useDataProvider()
+  const { data: action } = useQuery({
+    queryKey: [ResourceName.PLANTS_HIST, 'getLastByPlantId', { id: device?.plantID }],
+    queryFn: () => provider?.getLastByPlantId(ResourceName.PLANTS_HIST, { id: device?.plantID }),
+    enabled: device?.plantID !== -1,
+  })
+
+  console.log(action)
+
+  return (
+    <Tab {...props} label={label}>
+      <TextField source="id" />
+      <TextField source="name" />
+    </Tab>
+  )
+}
+
+const DeviceStatusTab = ({...props}) => {
+  const { label, path } = props
+
+  const { record: device } = useShowContext<DeviceDto>()
+  const provider = useDataProvider()
+  const { data: action } = useQuery({
+    queryKey: [ResourceName.PLANTS_HIST, 'getLastByPlantId', { id: device?.plantID }],
+    queryFn: () => provider?.getLastByPlantId(ResourceName.PLANTS_HIST, { id: device?.plantID }),
+    enabled: device?.plantID !== -1,
+  })
+
+  return(
+    <Tab {...props} label={label} path={path}>
+
+    </Tab>
+  )
+}
+
+const DevicePlantTab = ({ ...props }) => {
+  const { label, path } = props
   const { isFetching, isLoading, record } = useShowContext()
 
-  return !isFetching &&
-    !isLoading &&
-    record?.plantID &&
-    record?.plantID !== -1 ? (
-    <>
-      <h3>plant</h3>
-      <Show resource={ResourceName.PLANTS} id={record?.plantID}>
-        <SimpleShowLayout>
-          <TextField source="id" />
-          <TextField source="name" />
-          <ReferenceField source="speciesId" reference={ResourceName.SPECIES}>
+  if (!isFetching && !isLoading && record?.plantID && record?.plantID !== -1)
+    return (
+      <Tab {...props} label={label} path={path} LinkComponent={Link}>
+        <h3>plant</h3>
+        <Show resource={ResourceName.PLANTS} id={record?.plantID}>
+          <SimpleShowLayout>
+            <TextField source="id" />
             <TextField source="name" />
-          </ReferenceField>
-        </SimpleShowLayout>
-      </Show>
-    </>
-  ) : (
-    <div>
+            <ReferenceField source="speciesId" reference={ResourceName.SPECIES}>
+              <TextField source="name" />
+            </ReferenceField>
+          </SimpleShowLayout>
+        </Show>
+      </Tab>
+    )
+
+  return (
+    <Tab {...props} label={label} path={path} LinkComponent={Link}>
       <h4>no plant to show</h4>
       <CreateButton
         resource={ResourceName.PLANTS}
         to={`/plants/create?device=${record?.id}`}
       />
-    </div>
+    </Tab>
   )
 }
 
@@ -47,14 +90,10 @@ const DeviceShowLayout = ({ ...props }) => {
 
   return (
     <TabbedShowLayout {...props}>
-      <Tab label="general">
-        <TextField source="id" />
-        <TextField source="name" />
-      </Tab>
+      <DeviceGeneralTab label="details" />
+      <DeviceStatusTab label="statuses" />
       {!isFetching && !isLoading && record?.plantID && (
-        <Tab label="plant">
-          <DevicePlantTab />
-        </Tab>
+        <DevicePlantTab label="plant" path="plant" />
       )}
     </TabbedShowLayout>
   )
