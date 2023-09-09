@@ -5,4 +5,7 @@ export interface GuideDto {
   readonly info: string
   readonly maxHumidity: number
   readonly minHumidity: number
+  readonly airHumidity: number
+  readonly sunlightTime: number
+  readonly isPublic: boolean
 }

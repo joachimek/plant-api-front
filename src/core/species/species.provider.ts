@@ -18,10 +18,11 @@ const provider = {
     resource: string,
     { filter, sort, pagination }: GetListParams,
   ): Promise<GetListResult<SpeciesDto>> => {
-    if (filter?.q) {
+    if (filter?.name || filter?.q) {
+      const nameFilter = filter?.name || filter?.q
       const data = await get<SpeciesDto[]>(
         `${SPECIES_URL}/GetByName/`,
-        filter?.q,
+        nameFilter,
       )
 
       return Promise.resolve({

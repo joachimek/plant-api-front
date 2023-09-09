@@ -5,4 +5,5 @@ export enum ResourceName {
   PLANTS_HIST = 'plants-hist',
   SPECIES = 'species',
   USERS = 'users',
+  REVIEWS = 'reviews',
 }

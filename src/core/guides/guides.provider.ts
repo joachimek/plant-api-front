@@ -13,7 +13,6 @@ import { GUIDES_URL } from '../api-urls'
 import { get, post } from '../common/fetch.utils'
 import { GetListParams } from '../common/get-list.params'
 import { GuideDto } from '../dto/guides/GuideDto'
-import { DataProviderExtensionResult } from '../common/data-provider'
 
 const provider = {
   getList: async (
@@ -37,6 +36,7 @@ const provider = {
     resource: string,
     { id }: GetOneParams,
   ): Promise<GetOneResult<GuideDto>> => {
+    console.log(id)
     const record = await get<GuideDto>(GUIDES_URL, `/${id}`)
 
     return {
@@ -46,14 +46,12 @@ const provider = {
   getByPlantId: async (
     resource: string,
     { id }: GetByPlantIdParams,
-  ): Promise<DataProviderExtensionResult<GuideDto[]>> => {
+  ): Promise<GuideDto[]> => {
     const guide = await get<GuideDto[]>(
       `${GUIDES_URL}/GetByPlantId/`,
       id.toString(),
     )
-    return {
-      data: guide,
-    }
+    return guide
   },
   create: async (
     resource: string,
@@ -68,7 +66,6 @@ const provider = {
       data: created,
     }
   },
-  
   getMany: async (
     resource: string,
     { ids }: GetManyParams,
@@ -83,7 +80,7 @@ interface GuidesDataProvider extends DataProvider {
   getByPlantId: (
     resource: string,
     params: GetByPlantIdParams,
-  ) => Promise<DataProviderExtensionResult<GuideDto[]>>,
+  ) => Promise<GuideDto[]>
 }
 
 interface CreateRecordRequest {
@@ -91,6 +88,9 @@ interface CreateRecordRequest {
   readonly info?: string
   readonly maxHumidity: number
   readonly minHumidity: number
+  readonly airHumidity: number
+  readonly sunlightTime: number
+  readonly isPublic: boolean
 }
 
 export interface GetByPlantIdParams {

@@ -1,20 +1,16 @@
 import React from 'react'
-import {
-  Create,
-  NumberInput,
-  SimpleForm,
-  TextField,
-  TextInput,
-} from 'react-admin'
+import { BooleanInput, Create, SimpleForm, TextInput } from 'react-admin'
+import { SliderInput } from '../common/SliderInput'
 
 export const GuideEdit = ({ ...props }) => (
   <Create {...props}>
     <SimpleForm>
-      <TextField source="id" fullWidth />
-      <TextInput source="speciesId" fullWidth />
       <TextInput source="info" fullWidth />
-      <NumberInput source="maxHumidity" fullWidth />
-      <NumberInput source="minHumidity" fullWidth />
+      <SliderInput source="maxHumidity" fullWidth />
+      <SliderInput source="minHumidity" fullWidth />
+      <SliderInput source="airHumidity" fullWidth />
+      <SliderInput source="sunlightTime" fullWidth />
+      <BooleanInput source="isPublic" fullWidth />
     </SimpleForm>
   </Create>
 )

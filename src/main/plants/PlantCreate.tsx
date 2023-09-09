@@ -6,8 +6,8 @@ import {
   SimpleForm,
   TextInput,
 } from 'react-admin'
-import { ResourceName } from '../../core/ResourceName'
 import { useSearchParams } from 'react-router-dom'
+import { ResourceName } from '../../core/ResourceName'
 
 export const PlantCreate = ({ ...props }) => {
   const [paramsEntries] = useSearchParams()
@@ -31,6 +31,13 @@ export const PlantCreate = ({ ...props }) => {
         <ReferenceInput
           source="deviceId"
           reference={ResourceName.DEVICES}
+          fullWidth
+        >
+          <AutocompleteInput fullWidth />
+        </ReferenceInput>
+        <ReferenceInput
+          source="guideId"
+          reference={ResourceName.GUIDES}
           fullWidth
         >
           <AutocompleteInput fullWidth />

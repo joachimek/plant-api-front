@@ -6,6 +6,7 @@ import plantsProvider from './plants/plant.provider'
 import plantsHistProvider from './plants-hist/plants-hist.provider'
 import speciesProvider from './species/species.provider'
 import usersProvider from './users/user.provider'
+import reviewsProvider from './reviews/reviews.provider'
 
 export interface DataProviderResult<RecordType> {
   readonly data: RecordType
@@ -23,6 +24,7 @@ const dataProviders: Record<ResourceName, DataProvider> = {
   [ResourceName.PLANTS_HIST]: plantsHistProvider,
   [ResourceName.SPECIES]: speciesProvider,
   [ResourceName.USERS]: usersProvider,
+  [ResourceName.REVIEWS]: reviewsProvider,
 }
 
 const providers = (

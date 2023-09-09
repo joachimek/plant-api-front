@@ -1,14 +1,19 @@
 import React from 'react'
-import { Datagrid, List, TextField } from 'react-admin'
+import { Datagrid, List, ReferenceField, TextField } from 'react-admin'
+import { ResourceName } from '../../core/ResourceName'
 
 export const GuidesList = ({ ...props }) => (
   <List {...props}>
-    <Datagrid>
+    <Datagrid rowClick="show">
       <TextField source="id" />
-      <TextField source="speciesId" />
+      <ReferenceField
+        source="speciesID"
+        label="Species"
+        reference={ResourceName.SPECIES}
+      >
+        <TextField source="name" label="Species" />
+      </ReferenceField>
       <TextField source="info" />
-      <TextField source="maxHumidity" />
-      <TextField source="minHumidity" />
     </Datagrid>
   </List>
 )

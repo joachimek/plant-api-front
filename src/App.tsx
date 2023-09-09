@@ -4,7 +4,6 @@ import './App.css'
 import { Admin, LegacyDataProvider, Resource } from 'react-admin'
 import { ResourceName } from './core/ResourceName'
 import { DevicesList } from './main/devices/DevicesList'
-import { Dashboard } from './main/Dashboard'
 import dataProvider from './core/data.provider'
 import authProvider from './core/auth/auth.provider'
 import { DeviceCreate } from './main/devices/DeviceCreate'
@@ -19,13 +18,14 @@ import { GuidesList } from './main/guides/GuidesList'
 import { GuideCreate } from './main/guides/GuideCreate'
 import { GuideEdit } from './main/guides/GuidesEdit'
 import { UserShow } from './main/users/UserShow'
+import { GuideShow } from './main/guides/GuideShow'
+import { ReviewsCreate } from './main/reviews/ReviewCreate'
 
 function App() {
   return (
     <Admin
       dataProvider={dataProvider as unknown as LegacyDataProvider}
       authProvider={authProvider}
-      dashboard={Dashboard}
     >
       <Resource
         name={ResourceName.DEVICES}
@@ -40,6 +40,7 @@ function App() {
         show={PlantShow}
         create={PlantCreate}
         edit={PlantEdit}
+        recordRepresentation="name"
       />
       <Resource
         name={ResourceName.SPECIES}
@@ -54,13 +55,19 @@ function App() {
         list={GuidesList}
         create={GuideCreate}
         edit={GuideEdit}
+        show={GuideShow}
         icon={DynamicForm}
+        recordRepresentation="info"
       />
       <Resource name={ResourceName.PLANTS_HIST} />
       <Resource
         name={ResourceName.USERS}
         show={UserShow}
         recordRepresentation="username"
+      />
+      <Resource
+        name={ResourceName.REVIEWS}
+        create={ReviewsCreate}
       />
     </Admin>
   )

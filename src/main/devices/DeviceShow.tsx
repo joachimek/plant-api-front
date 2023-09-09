@@ -17,7 +17,6 @@ import { useQuery } from 'react-query'
 import { ResourceName } from '../../core/ResourceName'
 import { DeviceDto } from '../../core/dto/devices/DeviceDto'
 import { Link } from 'react-router-dom'
-import { PlantsHistDto } from '../../core/dto/plants-hists/PlantsHistDto'
 import { AirHumidityField } from './device-show/AirHumidityField'
 import { SoilHumidityField } from './device-show/SoilHumidityField'
 import { TemperatureField } from './device-show/TemperatureField'
@@ -27,13 +26,21 @@ const DeviceGeneralTab = ({ ...props }) => {
   const { record: device } = useShowContext<DeviceDto>()
   const provider = useDataProvider()
   const { data: action } = useQuery({
-    queryKey: [ResourceName.PLANTS_HIST, 'getLastByPlantId', { id: device?.plantID }],
-    queryFn: () => provider?.getLastByPlantId(ResourceName.PLANTS_HIST, { id: device?.plantID }),
-    enabled: device?.plantID !== -1,
+    queryKey: [
+      ResourceName.PLANTS_HIST,
+      'getLastByPlantId',
+      { id: device?.plantID },
+    ],
+    queryFn: () =>
+      provider?.getLastByPlantId(ResourceName.PLANTS_HIST, {
+        id: device?.plantID,
+      }),
+    enabled: device?.plantID !== -1 || true,
   })
   const { data: guide } = useQuery({
     queryKey: [ResourceName.GUIDES, 'getByPlantId', { id: device?.plantID }],
-    queryFn: () => provider?.getByPlantId(ResourceName.GUIDES, { id: device?.plantID }),
+    queryFn: () =>
+      provider?.getByPlantId(ResourceName.GUIDES, { id: device?.plantID }),
     enabled: device?.plantID !== -1,
   })
 
@@ -41,9 +48,9 @@ const DeviceGeneralTab = ({ ...props }) => {
     <Tab {...props} label={label}>
       <TextField source="id" />
       <TextField source="name" />
-      {action && <AirHumidityField action={action} guide={guide} />}
-      {action && <SoilHumidityField action={action} guide={guide} />}
-      {action && <TemperatureField action={action} guide={guide} />}
+      {action && guide && <AirHumidityField action={action} guide={guide} />}
+      {action && guide && <SoilHumidityField action={action} guide={guide} />}
+      {action && guide && <TemperatureField action={action} guide={guide} />}
     </Tab>
   )
 }
@@ -53,15 +60,36 @@ const DeviceStatusTab = ({ ...props }) => {
 
   const { record: device } = useShowContext<DeviceDto>()
   const provider = useDataProvider()
-  const { data: action } = useQuery({
-    queryKey: [ResourceName.PLANTS_HIST, 'getLastByPlantId', { id: device?.plantID }],
-    queryFn: () => provider?.getLastByPlantId(ResourceName.PLANTS_HIST, { id: device?.plantID }),
+  const { data: lastAction } = useQuery({
+    queryKey: [
+      ResourceName.PLANTS_HIST,
+      'getLastByPlantId',
+      { id: device?.plantID },
+    ],
+    queryFn: () =>
+      provider?.getLastByPlantId(ResourceName.PLANTS_HIST, {
+        id: device?.plantID,
+      }),
+    enabled: device?.plantID !== -1,
+  })
+  const { data: guide } = useQuery({
+    queryKey: [ResourceName.GUIDES, 'getByPlantId', { id: device?.plantID }],
+    queryFn: () =>
+      provider?.getByPlantId(ResourceName.GUIDES, { id: device?.plantID }),
     enabled: device?.plantID !== -1,
   })
 
   return (
     <Tab {...props} label={label} path={path}>
-
+      {lastAction && guide && (
+        <AirHumidityField action={lastAction} guide={guide} />
+      )}
+      {lastAction && guide && (
+        <SoilHumidityField action={lastAction} guide={guide} />
+      )}
+      {lastAction && guide && (
+        <TemperatureField action={lastAction} guide={guide} />
+      )}
     </Tab>
   )
 }
@@ -73,13 +101,16 @@ const DevicePlantTab = ({ ...props }) => {
   if (!isFetching && !isLoading && record?.plantID && record?.plantID !== -1)
     return (
       <Tab {...props} label={label} path={path} LinkComponent={Link}>
-        <h3>plant</h3>
-        <Show resource={ResourceName.PLANTS} id={record?.plantID}>
+        <Show resource={ResourceName.PLANTS} id={record?.plantID} title=" ">
           <SimpleShowLayout>
             <TextField source="id" />
             <TextField source="name" />
-            <ReferenceField source="speciesId" reference={ResourceName.SPECIES}>
-              <TextField source="name" />
+            <ReferenceField
+              source="speciesID"
+              label="Species"
+              reference={ResourceName.SPECIES}
+            >
+              <TextField source="name" label="Species" />
             </ReferenceField>
           </SimpleShowLayout>
         </Show>
@@ -98,17 +129,13 @@ const DevicePlantTab = ({ ...props }) => {
 }
 
 const DeviceShowLayout = ({ ...props }) => {
-  const { isFetching, isLoading, record } = useShowContext()
+  const { record } = useShowContext()
 
   return (
     <TabbedShowLayout {...props}>
       <DeviceGeneralTab label="details" />
-      {isFetching && isLoading && record?.plantID !== -1 && (
-        <DeviceStatusTab label="statuses" />
-      )}
-      {!isFetching && !isLoading && (
-        <DevicePlantTab label="plant" path="plant" />
-      )}
+      {record?.plantID !== -1 && <DeviceStatusTab label="statuses" />}
+      <DevicePlantTab label="plant" path="plant" />
     </TabbedShowLayout>
   )
 }

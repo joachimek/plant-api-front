@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   AutocompleteInput,
+  BooleanInput,
   Create,
   ReferenceInput,
   SimpleForm,
@@ -14,7 +15,7 @@ export const GuideCreate = ({ ...props }) => (
     <SimpleForm>
       <ReferenceInput
         reference={ResourceName.SPECIES}
-        source="speciesId"
+        source="speciesID"
         fullWidth
       >
         <AutocompleteInput fullWidth />
@@ -22,6 +23,9 @@ export const GuideCreate = ({ ...props }) => (
       <TextInput source="info" fullWidth />
       <SliderInput source="maxHumidity" fullWidth />
       <SliderInput source="minHumidity" fullWidth />
+      <SliderInput source="airHumidity" fullWidth />
+      <SliderInput source="sunlightTime" fullWidth />
+      <BooleanInput source="isPublic" fullWidth />
     </SimpleForm>
   </Create>
 )

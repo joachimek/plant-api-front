@@ -39,11 +39,15 @@ const DevicesListBase = ({ ...props }) => {
 
   return (
     <>
-      <Datagrid {...rest} rowClick="show">
-        <TextField source="id" />
+      <Datagrid {...rest} rowClick="show" bulkActionButtons={false}>
+        <TextField source="id" label="ID" />
         <TextField source="name" />
-        <ReferenceField source="plantId" reference={ResourceName.PLANTS}>
-          <TextField source="id" />
+        <ReferenceField
+          source="plantID"
+          label="Plant"
+          reference={ResourceName.PLANTS}
+        >
+          <TextField source="name" label="Plant" />
         </ReferenceField>
       </Datagrid>
       <DeviceCreateDialog
@@ -66,7 +70,6 @@ export const DevicesList = (props: ListProps) => {
   return (
     <List
       {...props}
-      bulkActionButtons={false}
       actions={<DeviceListAction handleOpenCreate={handleOpenCreate} />}
     >
       <DevicesListBase createOpen={createOpen} setCreateOpen={setCreateOpen} />
